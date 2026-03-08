@@ -1611,12 +1611,25 @@ function drawHUD() {
 }
 
 function drawCrosshair() {
+    // On mobile analog: project crosshair along aim vector from player centre
+    // On desktop: use raw mouse position as before
+    let cx, cy;
+    if (input.mobileAimActive) {
+        const CROSSHAIR_DIST = 90; // px from player centre — tweak if needed
+        const originX = player.x + player.w / 2;
+        const originY = player.y + player.h / 2;
+        cx = originX + player.aimX * CROSSHAIR_DIST;
+        cy = originY + player.aimY * CROSSHAIR_DIST;
+    } else {
+        cx = input.mouseX;
+        cy = input.mouseY;
+    }
     ctx.strokeStyle = "#FF00FF";
     ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(input.mouseX, input.mouseY, 12, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI * 2); ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(input.mouseX - 18, input.mouseY); ctx.lineTo(input.mouseX + 18, input.mouseY);
-    ctx.moveTo(input.mouseX, input.mouseY - 18); ctx.lineTo(input.mouseX, input.mouseY + 18);
+    ctx.moveTo(cx - 18, cy); ctx.lineTo(cx + 18, cy);
+    ctx.moveTo(cx, cy - 18); ctx.lineTo(cx, cy + 18);
     ctx.stroke();
 }
 

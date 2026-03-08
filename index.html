@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moon Patrol - Space Edition</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>MOON PATROL</h1>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <p class="controls-info">Space = Jump | Mouse/F/Ctrl = Shoot | P = Pause</p>
+
+        <!-- Mobile controls: shown only on touch devices via CSS -->
+        <div class="touch-controls">
+
+            <!-- LEFT SIDE: Jump + Shoot -->
+            <div class="touch-left">
+                <button id="btn-jump"  class="touch-btn action-btn">JUMP</button>
+                <button id="btn-shoot" class="touch-btn action-btn shoot-btn">SHOOT</button>
+            </div>
+
+            <!-- RIGHT SIDE: Analog stick for aiming + pause -->
+            <div class="touch-right">
+                <div id="analog-stick" class="analog-stick">
+                    <div id="analog-knob" class="analog-knob"></div>
+                </div>
+                <button id="btn-pause" class="touch-btn pause-btn">II</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>

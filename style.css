@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000011;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+    /* Prevent iOS bounce / callout */
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+
+.game-container {
+    text-align: center;
+    width: min(96vw, 860px);
+}
+
+h1 {
+    color: #00FF00;
+    font-size: 48px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+    letter-spacing: 3px;
+    font-weight: bold;
+    animation: glow-flicker 0.15s infinite;
+}
+
+canvas {
+    border: 4px solid #FF00FF;
+    box-shadow: 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+    display: block;
+    margin-bottom: 10px;
+    background: #000011;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    width: 100%;
+    height: auto;
+    touch-action: none;
+}
+
+.controls-info {
+    color: #00FFFF;
+    font-size: 13px;
+    text-shadow: 0 0 8px #00FFFF;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* ── Mobile touch controls ─────────────────────────────────────────────────── */
+.touch-controls {
+    display: none;           /* hidden on desktop, shown via media query below */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 4px;
+    gap: 8px;
+    height: 100px;
+}
+
+.touch-left {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+}
+
+.touch-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Standard touch buttons */
+.touch-btn {
+    border: 2px solid #00ffff;
+    background: rgba(0, 20, 35, 0.85);
+    color: #00ffff;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    font-size: 13px;
+    /* Circular buttons */
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 8px #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.touch-btn:active,
+.action-btn:active {
+    background: rgba(0, 255, 255, 0.22);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.7);
+}
+
+/* Shoot button slightly different colour to distinguish it */
+.shoot-btn {
+    border-color: #FF4466;
+    color: #FF4466;
+    text-shadow: 0 0 8px #FF4466;
+    box-shadow: 0 0 10px rgba(255, 68, 102, 0.4);
+}
+.shoot-btn:active {
+    background: rgba(255, 68, 102, 0.22);
+    box-shadow: 0 0 18px rgba(255, 68, 102, 0.7);
+}
+
+/* Pause button — small circle, top-right */
+.pause-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+    border-color: #FFFF00;
+    color: #FFFF00;
+    text-shadow: 0 0 8px #FFFF00;
+    box-shadow: 0 0 8px rgba(255, 255, 0, 0.3);
+}
+
+/* ── Analog stick ─────────────────────────────────────────────────────────── */
+/* TWEAK: width/height sets the touch area. Larger = easier to hit. */
+#analog-stick {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 255, 180, 0.5);
+    background: rgba(0, 40, 30, 0.6);
+    box-shadow: 0 0 12px rgba(0, 255, 180, 0.25);
+    position: relative;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    /* TWEAK: reduce size on very small phones if needed */
+}
+
+/* TWEAK: knob size — bigger = easier to see/feel */
+#analog-knob {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 255, 180, 0.7);
+    box-shadow: 0 0 10px rgba(0, 255, 180, 0.8);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: box-shadow 0.1s;
+}
+
+/* Retro glow flicker on title */
+@keyframes glow-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+    }
+    20%, 24%, 55% {
+        text-shadow: 0 0 5px #00FF00;
+    }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    .controls-info {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+    /* Show mobile controls on narrow screens */
+    .touch-controls {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 22px; }
+    #analog-stick { width: 90px; height: 90px; }
+    #analog-knob  { width: 36px; height: 36px; }
+    .touch-btn { width: 60px; height: 60px; font-size: 11px; }
+    .pause-btn { width: 38px; height: 38px; font-size: 14px; }
+}
